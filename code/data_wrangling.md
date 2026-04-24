@@ -3,7 +3,7 @@ title: "Data wrangling"
 author: 
   name: Arman Shaid
   affiliation: Oregon State University
-date: "24 April 2026"  # can also use: # </br>`r format(Sys.time(), '%d %B %Y')`
+date: "24 April 2026"  # can also use: # </br>24 April 2026
 output:
   html_document:
     theme: flatly  # you can experiment with other themes! for example, yeti
@@ -14,16 +14,7 @@ output:
     keep_md: true
 ---
 
-```{r setup, include=FALSE}
-# these next lines set the default behavior for all R chunks in the .Rmd document.
-# for more information: https://yihui.org/rmarkdown/r-code
-knitr::opts_chunk$set(
-  echo = TRUE,  # show all R output
-  cache = TRUE,  # can set equal to TRUE to cache results and increase performance
-  message = FALSE  # suppress messages (e.g. about namespace conflicts)
-  ) 
-knitr::opts_chunk$set(cache=TRUE) 
-```
+
 
 ## Goal and requirements
 
@@ -53,8 +44,8 @@ It is a good idea to load your libraries at the top of the Rmd document so that 
 
 *Hint: I have only added the libraries needed to download and read the data. You will need to load additional libraries to complete this assignment. Add them here once you discover that you need them.* 
 
-```{r libs, cache=FALSE}
 
+``` r
 if (!require("pacman")) install.packages("pacman")  # install the pacman package if necessary
 pacman::p_load(httr,readxl,here)  # install other packages using pacman::p_load()
 ```
@@ -63,7 +54,8 @@ pacman::p_load(httr,readxl,here)  # install other packages using pacman::p_load(
 
 Use `httr::GET()` to fetch the EIA excel file for us from web.
 
-```{r get, output=FALSE}
+
+``` r
 # library(here)  # already loaded
 # library(httr)  # already loaded
 url <- "https://www.eia.gov/coal/archive/coal_historical_exports.xlsx"
@@ -72,9 +64,19 @@ if(!file.exists(here::here("data/coal.xlsx"))) {  # only download the file if we
 }
 ```
 
+```
+## Response [https://www.eia.gov/coal/archive/coal_historical_exports.xlsx]
+##   Date: 2026-04-24 08:43
+##   Status: 200
+##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+##   Size: 997 kB
+## <ON DISK>  /Users/armanshaid/Desktop/aec699-hw2-datawrangling-shaid/data/coal.xlsx
+```
+
 Next, we read in the file.
 
-```{r read}
+
+``` r
 # library(readxl) already loaded
 coal <- read_xlsx(here::here("data/coal.xlsx"), skip=3, na=".")
 ```
